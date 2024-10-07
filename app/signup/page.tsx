@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -7,7 +7,7 @@ import PhoneStep from './steps/PhoneStep';
 import NameStep from './steps/NameStep';
 import VerificationStep from './steps/VerificationStep';
 
-export default function SignUp() {
+function SignUpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const step = searchParams.get('step');
@@ -23,20 +23,26 @@ export default function SignUp() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className='flex h-screen items-center justify-center'>
-        <div className='w-full max-w-sm rounded-lg bg-white p-8'>
-          {step === '1' ? (
-            <PhoneStep onSubmit={handleNextStep} />
-          ) : step === '2' ? (
-            <NameStep onSubmit={handleNextStep} />
-          ) : step === '3' ? (
-            <VerificationStep onSubmit={handleNextStep} />
-          ) : (
-            <EmailStep onSubmit={handleNextStep} />
-          )}
-        </div>
+    <div className='flex h-screen items-center justify-center'>
+      <div className='w-full max-w-sm rounded-lg bg-white p-8'>
+        {step === '1' ? (
+          <PhoneStep onSubmit={handleNextStep} />
+        ) : step === '2' ? (
+          <NameStep onSubmit={handleNextStep} />
+        ) : step === '3' ? (
+          <VerificationStep onSubmit={handleNextStep} />
+        ) : (
+          <EmailStep onSubmit={handleNextStep} />
+        )}
       </div>
+    </div>
+  );
+}
+
+export default function SignUp() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignUpContent />
     </Suspense>
   );
 }
